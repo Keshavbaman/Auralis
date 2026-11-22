@@ -1,0 +1,24 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools">
+ <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
+ <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MEDIA_PLAYBACK"/>
+ <uses-permission android:name="android.permission.FOREGROUND_SERVICE_DATA_SYNC"/>
+ <uses-permission android:name="android.permission.WAKE_LOCK"/>
+ <uses-permission android:name="android.permission.INTERNET"/>
+ <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+ <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+ <uses-permission android:name="android.permission.CHANGE_WIFI_MULTICAST_STATE"/>
+ <application android:name=".AuralisApp" android:label="Auralis" android:icon="@mipmap/ic_launcher_signature" android:roundIcon="@mipmap/ic_launcher_signature" android:theme="@style/Theme.Auralis" android:allowBackup="false" android:fullBackupContent="false" android:dataExtractionRules="@xml/data_extraction_rules" android:supportsRtl="true">
+  <meta-data android:name="com.google.android.gms.cast.framework.OPTIONS_PROVIDER_CLASS_NAME" android:value="app.auralis.cast.AuralisCastOptions"/>
+  <activity android:name=".MainActivity" android:exported="true" android:windowSoftInputMode="adjustResize" android:theme="@style/Theme.Auralis.Starting" android:launchMode="singleTop"/>
+  <activity-alias android:name="${applicationId}.launcher.Signature" android:targetActivity="app.auralis.MainActivity" android:exported="true" android:enabled="true" android:icon="@mipmap/ic_launcher_signature" android:roundIcon="@mipmap/ic_launcher_signature" android:label="Auralis"><intent-filter><action android:name="android.intent.action.MAIN"/><category android:name="android.intent.category.LAUNCHER"/></intent-filter></activity-alias>
+  <activity-alias android:name="${applicationId}.launcher.Classic" android:targetActivity="app.auralis.MainActivity" android:exported="true" android:enabled="false" android:icon="@mipmap/ic_launcher_classic" android:roundIcon="@mipmap/ic_launcher_classic" android:label="Auralis"><intent-filter><action android:name="android.intent.action.MAIN"/><category android:name="android.intent.category.LAUNCHER"/></intent-filter></activity-alias>
+  <activity-alias android:name="${applicationId}.launcher.Horizon" android:targetActivity="app.auralis.MainActivity" android:exported="true" android:enabled="false" android:icon="@mipmap/ic_launcher_horizon" android:roundIcon="@mipmap/ic_launcher_horizon" android:label="Auralis"><intent-filter><action android:name="android.intent.action.MAIN"/><category android:name="android.intent.category.LAUNCHER"/></intent-filter></activity-alias>
+  <activity-alias android:name="${applicationId}.launcher.Pulse" android:targetActivity="app.auralis.MainActivity" android:exported="true" android:enabled="false" android:icon="@mipmap/ic_launcher_pulse" android:roundIcon="@mipmap/ic_launcher_pulse" android:label="Auralis"><intent-filter><action android:name="android.intent.action.MAIN"/><category android:name="android.intent.category.LAUNCHER"/></intent-filter></activity-alias>
+  <activity-alias android:name="${applicationId}.launcher.Quill" android:targetActivity="app.auralis.MainActivity" android:exported="true" android:enabled="false" android:icon="@mipmap/ic_launcher_quill" android:roundIcon="@mipmap/ic_launcher_quill" android:label="Auralis"><intent-filter><action android:name="android.intent.action.MAIN"/><category android:name="android.intent.category.LAUNCHER"/></intent-filter></activity-alias>
+  <!-- Long transcriptions run as a foreground job so Android does not stop them after 10 minutes. -->
+  <service android:name="androidx.work.impl.foreground.SystemForegroundService" android:foregroundServiceType="dataSync" tools:node="merge"/>
+  <service android:name=".playback.PlaybackService" android:foregroundServiceType="mediaPlayback" android:exported="true">
+   <intent-filter><action android:name="androidx.media3.session.MediaSessionService"/></intent-filter>
+  </service>
+ </application>
+</manifest>

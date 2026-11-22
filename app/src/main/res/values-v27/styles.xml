@@ -1,0 +1,24 @@
+<resources>
+    <style name="Theme.Auralis" parent="Theme.AppCompat.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/brand_obsidian</item>
+        <item name="colorAccent">@color/brand_champagne</item>
+        <item name="android:colorBackground">@color/brand_obsidian</item>
+        <item name="android:fontFamily">sans</item>
+        <item name="android:windowLightStatusBar">false</item>
+        <item name="android:windowLightNavigationBar">false</item>
+        <item name="android:windowActionModeOverlay">true</item>
+        <item name="android:colorAccent">@color/brand_champagne</item>
+        <item name="android:windowBackground">@color/brand_obsidian</item>
+        <item name="android:statusBarColor">@color/brand_obsidian</item>
+        <item name="android:navigationBarColor">@color/brand_obsidian</item>
+    </style>
+    <style name="Theme.Auralis.Starting" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenBackground">@color/brand_obsidian</item>
+        <!-- The system owns the initial darkness. A single Compose identity follows;
+             a second static launcher emblem is deliberately not flashed beforehand. -->
+        <item name="windowSplashScreenAnimatedIcon">@drawable/splash_empty</item>
+        <item name="postSplashScreenTheme">@style/Theme.Auralis</item>
+        <item name="android:windowLightStatusBar">false</item>
+        <item name="android:windowLightNavigationBar">false</item>
+    </style>
+</resources>

@@ -1,0 +1,28 @@
+.gradle/
+.kotlin/
+local.properties
+**/build/
+*.jks
+*.keystore
+.idea/
+dist/
+device-backups/
+tools/.whisper-venv/
+tools/out/
+tools/__pycache__/
+*.py[cod]
+
+# Machine-specific profiling and device validation artifacts.
+docs/performance/
+docs/validation/
+docs/CAST-0.5.0.md
+
+# Image generation provenance can include local filesystem paths.
+branding/book-covers/**/generation-manifest.json
+branding/book-covers/**/prompts.json
+branding/book-covers/**/prompt-*.json
+
+# Personal library artwork and on-device screenshots are not source assets.
+branding/book-covers/
+docs/screenshots/
+docs/LIBRARY-CURATION-*.md

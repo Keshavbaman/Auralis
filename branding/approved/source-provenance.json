@@ -1,0 +1,12 @@
+{
+  "source": "Auralis Audiobook Icon Concept Sheet.png",
+  "sha256": "e2229c0e211ee5888124b7a12b9f6b97e89744359721f66f43a611a0918d613c",
+  "method": "Deterministic source extraction; lossless RGBA exports; vector silhouette/contour tracing",
+  "default": "signature",
+  "colors": [
+    "#111113",
+    "#F5BE70",
+    "#C49A58",
+    "#F5F0E6"
+  ]
+}

@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+# One command: transcribe every untranscribed audiobook on the phone, in the background.
+# Runs as a systemd user service, so it keeps going if the terminal closes.
+#   tools/transcribe-phone-library            # whole library
+#   tools/transcribe-phone-library --only Goosebumps
+#   tools/transcribe-phone-library --dry-run  # just list what would be done
+# Follow progress:  journalctl --user -fu auralis-library
+# Stop:             systemctl --user stop auralis-library
+set -euo pipefail
+here="$(cd "$(dirname "$0")" && pwd)"
+python="$here/.whisper-venv/bin/python"
+
+if [[ " $* " == *" --dry-run "* ]]; then
+  exec "$python" -I "$here/transcribe_phone_library.py" "$@"
+fi
+
+systemctl --user reset-failed auralis-library 2>/dev/null || true
+systemd-run --user --unit=auralis-library --collect \
+  --working-directory="$(cd "$here/.." && pwd)" \
+  "$python" -u -I "$here/transcribe_phone_library.py" "$@"
+echo "Started. Follow with: journalctl --user -fu auralis-library"

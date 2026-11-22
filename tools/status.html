@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Auralis · Transcripts</title>
+<style>
+  :root {
+    --bg: #101012; --card: #1b1b1f; --line: #2a2a30; --ink: #f5f3ef; --muted: #a5a5aa;
+    --gold: #f5be70; --red: #ff8a80;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--bg); color: var(--ink);
+    font: 15px/1.5 system-ui, -apple-system, "Segoe UI", sans-serif;
+  }
+  main { max-width: 860px; margin: 0 auto; padding: 40px 24px 64px; }
+  header { display: flex; align-items: baseline; gap: 14px; flex-wrap: wrap; }
+  h1 { font-size: 28px; letter-spacing: -.5px; margin: 0; }
+  .pill {
+    font-size: 12px; font-weight: 600; letter-spacing: 1.2px; text-transform: uppercase;
+    padding: 4px 10px; border-radius: 99px; border: 1px solid var(--line); color: var(--muted);
+  }
+  .pill.live { color: var(--gold); border-color: color-mix(in srgb, var(--gold) 45%, transparent); }
+  .sub { color: var(--muted); margin: 6px 0 28px; }
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: 20px; padding: 22px; }
+  .eyebrow { font-size: 11px; font-weight: 600; letter-spacing: 1.6px; color: var(--muted); text-transform: uppercase; }
+  .book { font-size: 20px; font-weight: 700; margin: 6px 0 14px; word-break: break-word; }
+  .bar { height: 8px; background: #2a2a30; border-radius: 99px; overflow: hidden; }
+  .bar > i { display: block; height: 100%; width: 0; background: var(--gold); border-radius: 99px; transition: width .6s ease; }
+  .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-top: 18px; }
+  .stat b { display: block; font-size: 20px; font-variant-numeric: tabular-nums; }
+  .stat span { font-size: 12px; color: var(--muted); }
+  h2 { font-size: 15px; margin: 32px 0 10px; color: var(--muted); font-weight: 600; }
+  ul { list-style: none; margin: 0; padding: 0; }
+  li { display: flex; justify-content: space-between; gap: 16px; padding: 11px 0; border-bottom: 1px solid var(--line); }
+  li .name { word-break: break-word; }
+  li .meta { color: var(--muted); white-space: nowrap; font-variant-numeric: tabular-nums; }
+  .empty { color: var(--muted); padding: 10px 0; }
+  .bad { color: var(--red); }
+  footer { margin-top: 36px; color: var(--muted); font-size: 12px; }
+  @media (max-width: 620px) { .stats { grid-template-columns: repeat(2, 1fr); } }
+</style>
+</head>
+<body>
+<main>
+  <header>
+    <h1>Transcripts</h1>
+    <span class="pill" id="state">Loading</span>
+  </header>
+  <p class="sub">Whisper on this laptop, free and offline. Each transcript is saved next to its audiobook on the phone, and Auralis picks it up by itself.</p>
+
+  <section class="card" id="current">
+    <div class="eyebrow" id="step">Waiting</div>
+    <div class="book" id="book">Nothing running</div>
+    <div class="bar"><i id="fill"></i></div>
+    <div class="stats">
+      <div class="stat"><b id="pct">–</b><span>of this book</span></div>
+      <div class="stat"><b id="speed">–</b><span>faster than listening</span></div>
+      <div class="stat"><b id="eta">–</b><span>left for this book</span></div>
+      <div class="stat"><b id="queued">–</b><span>books waiting</span></div>
+    </div>
+  </section>
+
+  <h2>Up next</h2>
+  <ul id="queue"></ul>
+
+  <h2>Finished</h2>
+  <ul id="done"></ul>
+
+  <div id="skippedBlock" hidden>
+    <h2>Skipped</h2>
+    <ul id="skipped"></ul>
+  </div>
+
+  <footer id="updated">Runs only on this computer.</footer>
+</main>
+<script>
+  const $ = (id) => document.getElementById(id);
+  const clock = (s) => {
+    s = Math.max(0, Math.round(s));
+    const h = Math.floor(s / 3600), m = Math.floor(s / 60) % 60, r = s % 60;
+    return h ? `${h}h ${m}m` : m ? `${m}m ${String(r).padStart(2, "0")}s` : `${r}s`;
+  };
+  const tidy = (name) => name.replace(/\.(mp3|m4b|m4a|aac|ogg|opus|flac|wav)$/i, "");
+  const item = (name, meta, cls = "") => {
+    const li = document.createElement("li");
+    const a = document.createElement("span"); a.className = "name " + cls; a.textContent = name;
+    const b = document.createElement("span"); b.className = "meta"; b.textContent = meta;
+    li.append(a, b); return li;
+  };
+
+  async function refresh() {
+    let s;
+    try { s = await (await fetch("/status.json", { cache: "no-store" })).json(); }
+    catch { $("state").textContent = "Page server stopped"; return; }
+
+    const live = s.state && !["finished", "idle"].includes(s.state);
+    $("state").textContent = s.state === "idle" ? "Idle" : s.state === "finished" ? "All done" : "Working";
+    $("state").className = "pill" + (live ? " live" : "");
+
+    const c = s.current;
+    if (c) {
+      const frac = c.total ? c.done / c.total : 0;
+      const since = c.since ? s.updated - c.since : 0;
+      const speed = since > 1 ? c.done / since : 0;
+      $("step").textContent = c.step;
+      $("book").textContent = tidy(c.name);
+      $("fill").style.width = (frac * 100).toFixed(1) + "%";
+      $("pct").textContent = c.total ? Math.floor(frac * 100) + "%" : "–";
+      $("speed").textContent = speed ? speed.toFixed(1) + "×" : "–";
+      $("eta").textContent = speed ? clock((c.total - c.done) / speed) : "–";
+    } else {
+      $("step").textContent = s.state === "finished" ? "Finished" : "Waiting";
+      $("book").textContent = s.state === "finished" ? "Every queued book is transcribed" : "Nothing running";
+      $("fill").style.width = s.state === "finished" ? "100%" : "0";
+      ["pct", "speed", "eta"].forEach((id) => ($(id).textContent = "–"));
+    }
+    $("queued").textContent = (s.queue || []).length;
+
+    $("queue").replaceChildren(
+      ...((s.queue || []).length ? s.queue.slice(0, 12).map((n, i) => item(tidy(n), i === 0 ? "next" : ""))
+        : [Object.assign(document.createElement("li"), { className: "empty", textContent: "Nothing waiting" })])
+    );
+    const done = (s.done || []).slice().reverse();
+    $("done").replaceChildren(
+      ...(done.length ? done.map((d) => item(tidy(d.name),
+          `${clock(d.audio)} of audio in ${clock(d.took)} · ${(d.audio / Math.max(d.took, 1)).toFixed(0)}× · ${d.lines} lines`))
+        : [Object.assign(document.createElement("li"), { className: "empty", textContent: "None yet" })])
+    );
+    const skipped = s.skipped || [];
+    $("skippedBlock").hidden = !skipped.length;
+    $("skipped").replaceChildren(...skipped.map((k) => item(tidy(k.name), k.reason, "bad")));
+
+    if (s.updated) $("updated").textContent =
+      `Updated ${new Date(s.updated * 1000).toLocaleTimeString()} · runs only on this computer`;
+  }
+  refresh();
+  setInterval(refresh, 2000);
+</script>
+</body>
+</html>

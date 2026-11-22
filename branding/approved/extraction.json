@@ -1,0 +1,82 @@
+{
+  "classic": {
+    "sourceBox": [
+      130,
+      196,
+      812,
+      809
+    ],
+    "foregroundSize": [
+      207,
+      185
+    ],
+    "sourceArtworkSize": [
+      674,
+      604
+    ]
+  },
+  "signature": {
+    "sourceBox": [
+      949,
+      229,
+      1112,
+      374
+    ],
+    "foregroundSize": [
+      228,
+      196
+    ],
+    "sourceArtworkSize": [
+      158,
+      136
+    ]
+  },
+  "horizon": {
+    "sourceBox": [
+      1207,
+      243,
+      1404,
+      374
+    ],
+    "foregroundSize": [
+      225,
+      147
+    ],
+    "sourceArtworkSize": [
+      190,
+      124
+    ]
+  },
+  "pulse": {
+    "sourceBox": [
+      941,
+      486,
+      1113,
+      651
+    ],
+    "foregroundSize": [
+      243,
+      227
+    ],
+    "sourceArtworkSize": [
+      167,
+      156
+    ]
+  },
+  "quill": {
+    "sourceBox": [
+      1207,
+      477,
+      1404,
+      644
+    ],
+    "foregroundSize": [
+      199,
+      164
+    ],
+    "sourceArtworkSize": [
+      197,
+      162
+    ]
+  }
+}

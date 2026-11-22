@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+# Open the transcript status page (runs on this computer only).
+set -euo pipefail
+here="$(cd "$(dirname "$0")" && pwd)"
+if ! systemctl --user is-active --quiet auralis-status; then
+  systemctl --user reset-failed auralis-status 2>/dev/null || true
+  systemd-run --user --unit=auralis-status --collect python3 -I "$here/status_server.py" >/dev/null
+  sleep 1
+fi
+echo "Status page: http://localhost:8765"
+xdg-open "http://localhost:8765" >/dev/null 2>&1 || true

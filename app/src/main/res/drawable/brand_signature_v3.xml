@@ -1,0 +1,28 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:aapt="http://schemas.android.com/aapt"
+    android:width="64dp"
+    android:height="64dp"
+    android:viewportWidth="64"
+    android:viewportHeight="64">
+    <!-- The legs of the A open into the two sides of the book. -->
+    <path android:pathData="M31.9,7.4 C32.5,6.2 34.2,6.2 34.8,7.4 L54.1,46.2 C51.8,45.9 49.4,45.8 47.2,46 L32.9,16.8 L17.8,46.1 C15.6,45.8 13.4,45.8 11.1,46 Z">
+        <aapt:attr name="android:fillColor">
+            <gradient android:startX="18" android:startY="9" android:endX="48" android:endY="51"
+                android:startColor="#FFF1CC" android:centerColor="#EDBC72" android:endColor="#B77740"/>
+        </aapt:attr>
+    </path>
+    <!-- A three-beat waveform serves as the crossbar. -->
+    <path android:pathData="M26.9,36.8 L26.9,41.2 M32.8,31.8 L32.8,44 M38.7,36.8 L38.7,41.2"
+        android:strokeWidth="2.8"
+        android:strokeLineCap="round"
+        android:strokeColor="#FFDC9C"/>
+    <path android:pathData="M7.5,49.6 C17.1,47.1 25.4,48.9 32.8,54.9 C40.2,48.9 48.5,47.1 58.1,49.6"
+        android:strokeWidth="3.2"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round">
+        <aapt:attr name="android:strokeColor">
+            <gradient android:startX="8" android:startY="50" android:endX="58" android:endY="50"
+                android:startColor="#BC8149" android:centerColor="#FFE4AD" android:endColor="#D49553"/>
+        </aapt:attr>
+    </path>
+</vector>
