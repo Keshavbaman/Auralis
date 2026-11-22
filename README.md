@@ -2,6 +2,8 @@
 
 **Your books. Your world.** A native, offline Android audiobook player built with Kotlin and Jetpack Compose. The current project version is **0.7.31** (version code 53). Auralis includes local audiobook import and playback, background MediaSession support, Chromecast streaming, transcript support, PDF reading, library organization, listening statistics, goals, achievements and backups. See [FEATURES.md](FEATURES.md) for implementation status and known limitations; not every item in the original master specification is complete.
 
+**Try the Android beta:** [Download Auralis 0.7.31](https://github.com/Keshavbaman/Auralis/releases/latest) · [Project page](https://keshavbaman.github.io/Auralis/). The APK is a sideloadable community build, not a Play Store release.
+
 See the [0.3.0 changelog](docs/CHANGELOG_0_3.md), [validation checklist](docs/UPDATE_0_3.md), and [approved branding / launcher / launch update](docs/BRANDING.md).
 
 ## Open and build on Linux
