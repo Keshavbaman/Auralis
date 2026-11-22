@@ -31,6 +31,13 @@
     .primary { color:#25180b; background:var(--gold); border-color:var(--gold); }
     .secondary { background:#1a1919; }
     .meta { color:var(--muted); font-size:.88rem; }
+    .screenshots { margin-top:64px; }
+    .screenshots h2 { font-size:clamp(2rem,5vw,3rem); margin:0 0 8px; }
+    .screenshots-intro { max-width:650px; color:var(--muted); margin:0 0 22px; }
+    .shot-grid { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:14px; }
+    .shot { margin:0; overflow:hidden; border:1px solid var(--line); border-radius:18px; background:#191817; }
+    .shot img { display:block; width:100%; aspect-ratio:878 / 1792; object-fit:cover; background:#181716; }
+    .shot figcaption { padding:11px 13px 13px; color:var(--muted); font-size:.88rem; }
     .grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:16px; margin-top:72px; }
     article { border:1px solid var(--line); background:linear-gradient(145deg,#1c1a19,#171617); padding:24px; border-radius:20px; }
     article h2 { font-size:1.4rem; margin:0 0 8px; }
@@ -39,7 +46,8 @@
     .note strong { color:var(--ink); }
     footer { border-top:1px solid var(--line); color:var(--muted); padding:22px 0 36px; font-size:.86rem; }
     footer .wrap { display:flex; justify-content:space-between; flex-wrap:wrap; gap:12px; }
-    @media(max-width:700px) { nav { gap:13px; font-size:.82rem; } .grid { grid-template-columns:1fr; margin-top:50px; } article { padding:20px; } }
+    @media(max-width:900px) { .shot-grid { grid-template-columns:repeat(3,minmax(0,1fr)); } }
+    @media(max-width:700px) { nav { gap:13px; font-size:.82rem; } .grid { grid-template-columns:1fr; margin-top:50px; } .shot-grid { grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px; } .shot { border-radius:14px; } .shot figcaption { padding:9px 10px 11px; font-size:.82rem; } article { padding:20px; } }
     @media(prefers-reduced-motion:reduce) { *,*::before,*::after { scroll-behavior:auto!important; transition:none!important; } }
   </style>
 </head>
@@ -61,6 +69,19 @@
         </div>
         <p class="meta">Version 0.7.31 · Android 8.0+ · 46 MiB · Free, no account or ads</p>
         <div class="note"><strong>Installing the beta:</strong> Download the APK on your Android device and open it. Android may ask you to allow your browser or file manager to install apps. This is a community test build signed with a development key; it is not a Play Store release and may not update an installation signed with another key. Check the release notes and SHA-256 checksum on the <a href="https://github.com/Keshavbaman/Auralis/releases/latest">GitHub release page</a>.</div>
+      </section>
+      <section class="screenshots" aria-labelledby="screenshots-title">
+        <h2 id="screenshots-title">A look inside Auralis</h2>
+        <p class="screenshots-intro">A few screens from the app, including the player and its interactive transcript. Book artwork and identifying text are blurred in these previews.</p>
+        <div class="shot-grid">
+          <figure class="shot"><img src="assets/screenshots/07-home-covers-blurred.webp" alt="Auralis Home screen with continue listening and book shelves" loading="lazy" decoding="async"><figcaption>Home · Continue listening</figcaption></figure>
+          <figure class="shot"><img src="assets/screenshots/02-library-books-blurred.webp" alt="Auralis audiobook library in grid view" loading="lazy" decoding="async"><figcaption>Library · Your books</figcaption></figure>
+          <figure class="shot"><img src="assets/screenshots/01-library-authors-blurred.webp" alt="Auralis library showing authors" loading="lazy" decoding="async"><figcaption>Library · Authors</figcaption></figure>
+          <figure class="shot"><img src="assets/screenshots/04-player-cover-blurred.webp" alt="Auralis audiobook player with playback controls" loading="lazy" decoding="async"><figcaption>Player · Listening controls</figcaption></figure>
+          <figure class="shot"><img src="assets/screenshots/03-transcript-text-blurred.webp" alt="Auralis player showing a time-synced transcript" loading="lazy" decoding="async"><figcaption>Player · Interactive transcript</figcaption></figure>
+          <figure class="shot"><img src="assets/screenshots/06-listening-miniplayer-blurred.webp" alt="Auralis listening goals and progress dashboard" loading="lazy" decoding="async"><figcaption>Listening · Goals and progress</figcaption></figure>
+          <figure class="shot"><img src="assets/screenshots/05-profile-miniplayer-blurred.webp" alt="Auralis personal listening profile and achievements" loading="lazy" decoding="async"><figcaption>Your world · Listening milestones</figcaption></figure>
+        </div>
       </section>
       <section id="features" class="grid" aria-label="Auralis features">
         <article><h2>Your own library</h2><p>Import audiobooks from device storage with Android’s file picker. Organize books, series, authors and collections, and edit the details.</p></article>
